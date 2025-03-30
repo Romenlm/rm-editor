@@ -1,0 +1,97 @@
+.ProseMirror-selectednode {
+  outline: 1px solid #70CFF8;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  /* 滚动条宽度 */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* 滚动条轨道背景 */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  /* 滚动条滑块颜色 */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
+  /* 滚动条滑块悬停颜色 */
+}
+
+.global-drag-handle-box{
+  position: absolute;
+  display: none;
+  .global-drag-handle-add{
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+    background-image: url(../images/text.png);
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-position: 4px 4px;
+    background-color:rgba(0,0,0,0.04);
+    border-radius: 4px;
+    cursor: pointer;
+    &.add-h1{
+      background-image: url(../images/h1.png);
+    }
+    &.add-h2{
+      background-image: url(../images/h2.png);
+    }
+    &.add-h3{
+      background-image: url(../images/h3.png);
+    }
+    &.add-h4{
+      background-image: url(../images/h4.png);
+    }
+    &.add-h5{
+      background-image: url(../images/h5.png);
+    }
+    &.add-h6{
+      background-image: url(../images/h6.png);
+    }
+    &.add-codeBlock{
+      background-image: url(../images/codeBlock.png);
+    }
+    &.add-bulletList{
+      background-image: url(../images/bulletList.png);
+    }
+    &.add-orderedList{
+      background-image: url(../images/orderedList.png);
+    }
+    &.add-taskList{
+      background-image: url(../images/taskList.png);
+    }
+    &.add-blockquote{
+      background-image: url(../images/blockquote.png);
+    }
+    &.add-table{
+      background-image: url(../images/table.png);
+    }
+    &.add-image{
+      background-image: url(../images/image.png);
+    }
+  }
+  .global-drag-handle {
+    width: 24px;
+    height: 24px;
+    &::after {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      content: '⠿';
+      font-weight: 700;
+      cursor: grab;
+      background-color:rgba(0,0,0,0.04);
+      color: #3D4757;
+      border-radius: 4px;
+    }
+  }
+}
