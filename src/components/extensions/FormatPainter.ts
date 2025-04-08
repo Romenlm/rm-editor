@@ -9,10 +9,10 @@ import { Extension } from '@tiptap/core'
  * @param {*} form 选中起始位置
  * @param {*} to 选中结束位置
  */
-function isFormatList(blockNode, nodes, form, to) {
+function isFormatList(blockNode:any, nodes:any[], form:any, to:any) {
   let flag = true
   if (blockNode && ['bulletList', 'orderedList', 'taskList'].includes(blockNode.node.type.name)) {
-    let listItem = nodes.filter(item => {
+    let listItem = nodes.filter((item:any) => {
       return ['listItem', 'taskItem'].includes(item.node.type.name)
     })
     for (let val of listItem) {
@@ -45,18 +45,21 @@ export const FormatPainter = Extension.create({
     }
   },
 
-  addCommands() {
+  addCommands():any {
     return {
-      copyFormat: () => ({ tr, editor }) => {
+      copyFormat: () => ({ tr, editor }:{tr:any,editor:any}) => {
         const { selection } = tr
-        const formats = {
-          block: null,
+        const formats:any = {
+          block: {
+            type: '',
+            attrs: {},
+          },
           marks: []
         }
 
 
         // 收集块级格式
-        editor.state.doc.nodesBetween(selection.from, selection.to, (node, pos) => {
+        editor.state.doc.nodesBetween(selection.from, selection.to, (node:any) => {
           if (formats.block) return false; // 只取第一个块的格式
           if (this.options.supportedBlocks.includes(node.type.name)) {
             formats.block = {
@@ -69,11 +72,11 @@ export const FormatPainter = Extension.create({
 
         // 收集标记样式
         const marks = editor.state.storedMarks || selection.$from.marks()
-        marks.forEach(mark => {
+        marks.forEach((mark:any) => {
           if (this.options.supportedMarks.includes(mark.type.name)) {
             formats.marks.push({
-              type: mark.type.name,
-              attrs: { ...mark.attrs }
+              type: mark?.type?.name,
+              attrs: { ...mark?.attrs }
             })
           }
         })
@@ -81,7 +84,7 @@ export const FormatPainter = Extension.create({
         return true
       },
 
-      applyFormat: () => ({ tr, editor, chain }) => {
+      applyFormat: () => ({ tr, editor, chain }:{tr:any,editor:any,chain:any}) => {
         const formats = editor.storage.formatPainter.formats
         if (!formats) return false
 
@@ -90,12 +93,12 @@ export const FormatPainter = Extension.create({
 
         // 应用块级格式
         if (formats.block) {
-          let nodes = []
+          let nodes:any[] = []
           let form = 0, to = 0
-          editor.state.doc.nodesBetween($from.pos, $to.pos, (node, pos, parent) => { // 添加parent参数
+          editor.state.doc.nodesBetween($from.pos, $to.pos, (node:any, pos:number) => { // 添加parent参数
             form = $from.pos
             to = $to.pos
-            const nodeType = editor.schema.nodes[formats.block.type]
+            // const nodeType = editor.schema.nodes[formats.block.type]
             let obj = {
               pos: pos,
               node: node
@@ -140,7 +143,7 @@ export const FormatPainter = Extension.create({
           }
         }
         // 应用标记样式
-        formats.marks.forEach(mark => {
+        formats.marks.forEach((mark:any) => {
           chain()
             .setMark(mark.type, mark.attrs)
             .run()
@@ -149,7 +152,7 @@ export const FormatPainter = Extension.create({
         return true
       },
 
-      toggleFormatPainter: () => ({ editor }) => {
+      toggleFormatPainter: () => ({ editor }:{editor:any}) => {
         editor.storage.formatPainter.isPainting = !editor.storage.formatPainter.isPainting
         return true
       }

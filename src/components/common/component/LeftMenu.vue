@@ -13,7 +13,7 @@
     </div>
     <ol class="menu-options-list">
       <li v-for="(item, index) of list" :key="'menu_option_' + index"
-          :class="{'is-active':item.showActive && editor.isActive(item.key,item.params||'')}"
+          :class="{'is-active':item.showActive && editor.isActive(item.key,item?.params)}"
           :style="item.style||{}"
           @click="selectItem(item)">
         <i v-if="item.icon" :class="[item.icon]"/><span>{{ item.name }}</span>
@@ -25,7 +25,7 @@
 import RmButton from "./RmButton.vue";
 import {defineProps, reactive, ref} from 'vue'
 
-const {editor,targetEndPos} = defineProps({
+const {editor,targetEndPos,t} = defineProps({
   editor: {
     type: Object,
     required: true
@@ -33,12 +33,16 @@ const {editor,targetEndPos} = defineProps({
   targetEndPos:{
     type: Number,
     default: -1
+  },
+  t:{
+    type: Function,
+    required: true
   }
 })
 let leftElement = ref(null)
 let textheadings = reactive([
   {
-    name: '标题1',
+    name: t('tools.heading1'),
     key: 'heading',
     params: {level: 1},
     fun: 'toggleHeading',
@@ -47,7 +51,7 @@ let textheadings = reactive([
     showActive: true
   },
   {
-    name: '标题2',
+    name: t('tools.heading2'),
     key: 'heading',
     params: {level: 2},
     fun: 'toggleHeading',
@@ -56,7 +60,7 @@ let textheadings = reactive([
     showActive: true
   },
   {
-    name: '标题3',
+    name: t('tools.heading3'),
     key: 'heading',
     params: {level: 3},
     fun: 'toggleHeading',
@@ -65,7 +69,7 @@ let textheadings = reactive([
     showActive: true
   },
   {
-    name: '标题4',
+    name: t('tools.heading4'),
     key: 'heading',
     params: {level: 4},
     fun: 'toggleHeading',
@@ -74,7 +78,7 @@ let textheadings = reactive([
     showActive: true
   },
   {
-    name: '标题5',
+    name: t('tools.heading5'),
     key: 'heading',
     params: {level: 5},
     fun: 'toggleHeading',
@@ -83,7 +87,7 @@ let textheadings = reactive([
     showActive: true
   },
   {
-    name: '标题6',
+    name: t('tools.heading6'),
     key: 'heading',
     params: {level: 6},
     fun: 'toggleHeading',
@@ -92,8 +96,9 @@ let textheadings = reactive([
     showActive: true
   },
   {
-    name: '正文',
+    name: t('tools.paragraph'),
     key: 'paragraph',
+    params: '',
     fun: 'setParagraph',
     icon: 'icon-text',
     type: 'button',
@@ -103,70 +108,79 @@ let textheadings = reactive([
 const list = reactive([
 
   {
-    name: '无序列表',
+    name: t('tools.bulletList'),
     key: 'bulletList',
     fun: 'toggleBulletList',
+    params: '',
     icon: 'icon-bullet-list',
     type: 'button',
     showActive: true
   },
   {
-    name: '有序列表',
+    name: t('tools.orderedList'),
     key: 'orderedList',
     fun: 'toggleOrderedList',
+    params: '',
     icon: 'icon-ordered-list',
     type: 'button',
     showActive: true
   },
   {
-    name: '任务列表',
+    name: t('tools.taskList'),
     key: 'taskList',
+    params: '',
     fun: 'toggleTaskList',
     icon: 'icon-task-list',
     type: 'button',
     showActive: true
   },
   {
-    name: '代码块',
+    name: t('tools.codeBlock'),
     key: 'codeBlock',
+    params: '',
     fun: 'toggleCodeBlock',
     icon: 'icon-code-block',
     type: 'button',
     showActive: true
   },
   {
-    name: '引用',
+    name: t('tools.blockquote'),
     key: 'blockquote',
+    params: '',
     fun: 'toggleBlockquote',
     icon: 'icon-blockquote',
     type: 'button',
     showActive: true
   },
   {
-    name: '水平线',
+    name: t('tools.horizontalRule'),
     key: 'horizontalRule',
+    params: '',
     fun: 'setHorizontalRule',
     icon: 'icon-horizontal-rule',
     type: 'button',
     showActive: false
   },
   {
-    name: '表格',
+    name: t('tools.table'),
     key: 'table',
+    params: '',
     type: 'table',
     icon: 'icon-table',
     showActive: true
   },
   {
-    name: '图片',
+    name: t('tools.image'),
     key: 'image',
+    params: '',
     type: 'image',
     icon: 'icon-image',
     showActive: true
   },
   {
-    name: '删除',
+    name: t('base.delete'),
     key: 'del',
+    params: '',
     fun: 'del',
     style: {color: '#da2c15'},
     icon: 'icon-delete',
@@ -198,7 +212,7 @@ const selectItem = (item:any)=> {
 }
 const delFun = ()=> {
   let el = document.querySelector(`.ProseMirror`)
-  let self = document.querySelector(`.ProseMirror-selectednode`)||null
+  let self:any = document.querySelector(`.ProseMirror-selectednode`)
   el?.removeChild(self)
 }
 </script>

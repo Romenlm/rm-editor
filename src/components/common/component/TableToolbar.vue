@@ -1,5 +1,16 @@
 <template>
-  <div class="table-toolbar" v-if="editor.isActive('table') && !isMove " :style="style">
+  <div
+    class="table-toolbar"
+    :class="[flexDirection==='col'?'flex-col':'flex-row']"
+    v-if="editor.isActive('table') && !isMove "
+    :style="{
+      height:style.height,
+      width:style.width,
+      left:style.left,
+      top:style.top,
+      right:style.right
+    }"
+  >
       <template v-for="item of list" :key="'table_toolbar'+item.key">
         <RmButton
             :name="item.name"
@@ -16,7 +27,7 @@
 import {defineProps,reactive,ref,onMounted,watch} from 'vue'
 import {throttle} from "../../../assets/common/utils.ts";
 import RmButton from "./RmButton.vue";
-const {editor,isDrag} = defineProps({
+const {editor,isDrag,t} = defineProps({
   editor: {
     type: Object,
     required: true
@@ -24,12 +35,16 @@ const {editor,isDrag} = defineProps({
   isDrag: {
     type: Boolean,
     default: false
+  },
+  t: {
+    type: Function,
+    required: true
   }
 })
 
 const list = reactive([
   {
-    name: '删除表格',
+    name: t('table.deleteTable'),
     key: 'deleteTable',
     fun: 'deleteTable',
     icon: 'icon-delete-table',
@@ -37,7 +52,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '左边加一列',
+    name: t('table.addColumnBefore'),
     key: 'columnBefore',
     fun: 'addColumnBefore',
     icon: 'icon-add-col-before',
@@ -45,7 +60,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '右边加一列',
+    name: t('table.addColumnAfter'),
     key: 'columnAfter',
     fun: 'addColumnAfter',
     icon: 'icon-add-col-after',
@@ -53,7 +68,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '删除列',
+    name: t('table.deleteColumn'),
     key: 'deleteColumn',
     fun: 'deleteColumn',
     icon: 'icon-delete-col',
@@ -61,7 +76,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '上面加一行',
+    name: t('table.addRowBefore'),
     key: 'addRowBefore',
     fun: 'addRowBefore',
     icon: 'icon-add-row-before',
@@ -69,7 +84,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '下面加一行',
+    name: t('table.addRowAfter'),
     key: 'addRowAfter',
     fun: 'addRowAfter',
     icon: 'icon-add-row-after',
@@ -77,7 +92,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '删除行',
+    name: t('table.deleteRow'),
     key: 'deleteRow',
     fun: 'deleteRow',
     icon: 'icon-delete-row',
@@ -85,7 +100,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '合并单元格',
+    name: t('table.mergeCells'),
     key: 'mergeCells',
     fun: 'mergeCells',
     icon: 'icon-merge-cells',
@@ -93,7 +108,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '取消合并单元格',
+    name: t('table.splitCells'),
     key: 'splitCell',
     fun: 'splitCell',
     icon: 'icon-split-cells',
@@ -101,7 +116,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '列表头',
+    name: t('table.headerColumn'),
     key: 'headerColumn',
     fun: 'toggleHeaderColumn',
     icon: 'icon-header-column',
@@ -109,7 +124,7 @@ const list = reactive([
     showActive: false
   },
   {
-    name: '行表头',
+    name: t('table.headerRow'),
     key: 'toggleHeaderRow',
     fun: 'toggleHeaderRow',
     icon: 'icon-header-row',
@@ -117,7 +132,15 @@ const list = reactive([
     showActive: false
   }
 ])
-const style = reactive({
+interface Style {
+  height:string,
+  width:string,
+  flexDirection:string,
+  left:string,
+  top:string,
+  right:string
+}
+const style = reactive<Style>({
   height:'',
   width:'',
   flexDirection:'',
@@ -134,12 +157,13 @@ watch(()=>isDrag,()=>{
   }
 })
 onMounted(()=>{
-  editor.on('selectionUpdate', ({  }) => {
+  editor.on('selectionUpdate', () => {
     if(editor.isActive('table')){
       setPosition()
     }
   })
 })
+let flexDirection = ref('row')
 const setPosition = throttle(()=>{
   let el = document.querySelector('.ProseMirror-selectednode')
   if(!el){
@@ -174,28 +198,26 @@ const setPosition = throttle(()=>{
       let trTop = trElement.offsetTop
       style.height = ''
       style.width='40px'
-      style.flexDirection = 'column'
+      flexDirection.value = 'column'
       style.left = (tableElement.children[0].clientWidth)+58+'px'
       if(tableBottom-trTop<toolsHeight.value){
         style.top = (tableBottom-toolsHeight.value)+'px'
       }else{
         style.top = trTop+'px'
       }
-      console.log(style)
     }else{
       placementValue.value = 'top'
       style.right = ''
       style.width = ''
       style.height='40px'
-      style.flexDirection = 'row'
       style.left = '55px'
       style.top = (tableElement.offsetTop-42)+'px'
-      console.log(style)
+      flexDirection.value = 'row'
     }
   }
 },1000,true)
 
-const setDisabled = (key:any)=> {
+const setDisabled = (key:string)=> {
   if (key === 'mergeCells' && !editor.can().mergeCells()) {
     return true
   }
@@ -216,5 +238,11 @@ const setDisabled = (key:any)=> {
   background-color: #fff;
   border-radius: 4px;
   z-index: 1;
+  &.flex-col{
+    flex-direction: column;
+  }
+  &.flex-row{
+    flex-direction: row;
+  }
 }
 </style>

@@ -31,11 +31,11 @@ const {icon,defaultColor} = defineProps({
   }
 })
 const emit = defineEmits(['change'])
-let colorValue = ref(null)
+let colorValue = ref<HTMLInputElement|null>(null)
 let color = ref(defaultColor)
 // 设置颜色
 const setColor = ()=>{
-  colorValue.value.click()
+  colorValue?.value?.click()
 }
 // 设置颜色值
 const setColorValue = ($event:any)=>{

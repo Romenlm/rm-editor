@@ -17,33 +17,52 @@
       >
         <i :class="item.icon"/>
       </RmButton>
-      <SetFontColor v-if="item.type==='fontColor'&& !item?.noShowNode?.includes(nodeType)" :editor="editor"/>
-      <SetHighlight v-if="item.type==='highlight'&& !item?.noShowNode?.includes(nodeType)" :editor="editor"/>
-      <TextAlign v-if="item.type==='align'&& !item?.noShowNode?.includes(nodeType)" :editor="editor" :name="item.name"/>
-      <InstallTable v-if="item.type==='table'&& !item?.noShowNode?.includes(nodeType)" :editor="editor" :name="item.name"/>
-      <InstallImage v-if="item.type==='image'&& !item?.noShowNode?.includes(nodeType)" :editor="editor" :name="item.name"/>
-      <InstallLink v-if="item.type==='link'&& !item?.noShowNode?.includes(nodeType)" :editor="editor" :name="item.name"/>
-      <SetHeading v-if="item.type==='setMenu'&& !item?.noShowNode?.includes(nodeType)" :editor="editor" :type="type"/>
+      <SetFontColor 
+      v-if="item.type==='fontColor'&& !item?.noShowNode?.includes(nodeType)" 
+      :editor="editor" :title="item.name"/>
+      <SetHighlight 
+      v-if="item.type==='highlight'&& !item?.noShowNode?.includes(nodeType)" 
+      :editor="editor" :title="item.name"/>
+      <TextAlign 
+      v-if="item.type==='align'&& !item?.noShowNode?.includes(nodeType)" 
+      :editor="editor"
+      :t="t"
+      :name="item.name"/>
+      <InstallTable 
+        v-if="item.type==='table'&& !item?.noShowNode?.includes(nodeType)"
+        :editor="editor"
+        :t="t"
+        :title="item.name"/>
+      <InstallImage v-if="item.type==='image'&& !item?.noShowNode?.includes(nodeType)"
+        :editor="editor"
+        :name="item.name"/>
+<!--      <InstallLink v-if="item.type==='link'&& !item?.noShowNode?.includes(nodeType)" :editor="editor" :name="item.name" :t="t"/>-->
+      <SetHeading 
+      v-if="item.type==='setMenu'&& !item?.noShowNode?.includes(nodeType)" 
+      :editor="editor" :type="type"
+      :t="t"
+      :title="item.name"/>
+      <SetFontSize v-if="item.type==='fontSize'&& !item?.noShowNode?.includes(nodeType)" :editor="editor" :title="item.name"/>
       <span v-if="item.type==='line'&& !item?.noShowNode?.includes(nodeType)" class="rm-liner"/>
     </template>
   </div>
 </template>
 <script setup lang="ts">
 import {defineEmits, reactive, defineProps, computed, onMounted} from "vue";
-import {bubbleList} from "../../assets/common/config.ts";
+import {getBubbleList} from "../../assets/common/config.ts";
 import RmButton from "./component/RmButton.vue";
 import SetFontColor from "./component/SetFontColor.vue";
 import SetHighlight from "./component/SetHighlight.vue";
 import TextAlign from "./component/TextAlign.vue";
 import InstallTable from "./component/InstallTable.vue";
 import InstallImage from "./component/InstallImage.vue";
-import InstallLink from "./component/InstallLink.vue";
 import SetHeading from "./component/SetHeading.vue";
+import SetFontSize from "./component/SetFontSize.vue";
 let emit = defineEmits<{
   (e: 'setLink',key:string): void,
 }>()
 
-const {editor,type} = defineProps({
+const {editor,type,t} = defineProps({
   editor: {
     type: Object,
     required: true
@@ -51,11 +70,15 @@ const {editor,type} = defineProps({
   type:{
     type: String,
     default: ''
+  },
+  t:{
+    type: Function,
+    required: true
   }
 })
 // TODO 后续移动到index.vue文件中
 
-let nodeType = computed(()=>{
+let nodeType = computed<string>(()=>{
   if(editor.isActive('heading')){
     return 'heading'
   }
@@ -82,9 +105,12 @@ let nodeType = computed(()=>{
   }
   if(editor.isActive('blockquote')){
     return 'blockquote'
+  }else {
+    return ''
   }
 })
 
+let bubbleList = getBubbleList(t)
 const list = reactive(bubbleList)
 const setDisabled = (key: string) => {
   if (key === 'undo' && !editor.can().undo()) {

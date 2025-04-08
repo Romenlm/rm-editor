@@ -3,18 +3,18 @@
 <template>
     <div class="set-link">
       <div class="set-link-item" >
-        <span>链接地址</span>
+        <span>{{ t('link.linkLabel') }}</span>
         <input v-model="link">
       </div>
       <div class="set-link-item" >
-        <span>打开方式</span>
+        <span>{{ t('link.openLabel') }}</span>
         <select v-model="target">
-          <option value="_blank">新窗口打开</option>
-          <option value="_self">当前窗口打开</option>
+          <option value="_blank">{{ t('link.newWindow') }}</option>
+          <option value="_self">{{t('link.currentWindow')}}</option>
         </select>
       </div>
       <div class="set-link-footer" >
-        <button type="button" @click="setLink">确定</button>
+        <button type="button" @click="setLink">{{ t('base.ok') }}</button>
       </div>
     </div>
 </template>
@@ -29,6 +29,10 @@ const {editor,defaultLink} = defineProps({
   defaultLink: {
     type: String,
     default: ''
+  },
+  t:{
+    type: Function,
+    required: true
   }
 })
 const link = ref(defaultLink)
@@ -69,6 +73,8 @@ const setLink = ()=>{
     margin-bottom: 20px;
     span{
       margin-right: 10px;
+      width: 100px;
+      text-align: right;
     }
     input{
       height: 32px;

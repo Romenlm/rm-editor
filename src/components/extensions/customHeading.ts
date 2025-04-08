@@ -20,7 +20,7 @@ export const CustomHeading = Heading.extend({
   addCommands() {
     return {
       ...this.parent?.(), // 继承父类的命令
-      setHeadingId: (id) => ({ chain }) => {
+      setHeadingId: (id:string) => ({ chain }:{chain:any}) => {
         return chain()
           .setNode('heading', { id })
           .run()

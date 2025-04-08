@@ -4,7 +4,8 @@
   <Dropdown>
     <div class="menu-button">
       <div class="color-left">
-        <i :class="[icon]" alt="菜单"/>
+        <i v-if="icon" :class="[icon]"/>
+        <span v-if="showValue">{{activeValue}}</span>
       </div>
       <div class="color-arrow">
         <img src="../../../assets/images/arrow.png" alt="下拉">
@@ -17,7 +18,7 @@
             {{ item.name }}
           </p>
           <li v-else :class="{'is-active':active===item?.value}" @click="selectItem(item)" v-close-popper>
-            <i v-if="item?.icon" :class="[item?.icon]" alt="图标"/>
+            <i v-if="item?.icon" :class="[item?.icon]"/>
             <span>{{ item?.name }}</span>
           </li>
         </template>
@@ -28,28 +29,26 @@
 </template>
 <script setup lang="ts">
 import { Dropdown,vClosePopper } from 'floating-vue'
-import {defineProps, defineEmits, ref} from 'vue'
+import {defineProps, defineEmits, ref,watch} from 'vue'
 const emit = defineEmits(['change'],)
-const {icon,options,width,active} = defineProps({
-  icon: {
-    type: String,
-    default: ''
-  },
-  options: {
-    type: Array,
-    default: ()=>[]
-  },
-  width: {
-    type: Number,
-    default: 0
-  },
-  active: {
-    type: String,
-    default: ''
-  }
-})
+interface MenuOption {
+  value: string;
+  name: string;
+  icon?: string;
+  showValue?: boolean;
+}
+const { icon, options, width, active,showValue } = defineProps<{
+  icon: string;
+  options: MenuOption[];
+  width: number;
+  active: string;
+  showValue?: boolean;
+}>();
 let activeValue = ref(active)
-const selectItem = (item:any)=>{
+watch(()=>active,(value)=>{
+  activeValue.value = value
+})
+const selectItem = (item:MenuOption)=>{
   activeValue.value = item.value
   emit('change',item)
 }

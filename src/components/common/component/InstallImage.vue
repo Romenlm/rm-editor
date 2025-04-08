@@ -21,7 +21,3 @@ const setImage = () => {
   editor.chain().focus().setImage({ src: url }).run()
 }
 </script>
-
-<style scoped lang="less">
-
-</style>

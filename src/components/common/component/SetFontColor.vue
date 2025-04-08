@@ -1,7 +1,7 @@
 <template>
 <!--  :active="editor.getAttributes('textStyle').color"-->
   <RmButton
-    :name="'字体颜色'"
+    :name="title"
 
   >
     <SelectColor
@@ -15,10 +15,14 @@
 import {defineProps} from 'vue'
 import RmButton from "./RmButton.vue";
 import SelectColor from "./SelectColor.vue";
-const {editor} = defineProps({
+const {editor,title} = defineProps({
   editor: {
     type: Object,
     default: ()=>{}
+  },
+  title:{
+    type:String,
+    default:''
   }
 })
 let defaultColor = editor.getAttributes('textStyle').color

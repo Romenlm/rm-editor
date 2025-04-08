@@ -1,12 +1,12 @@
 <template>
   <Dropdown :disabled="editor.isActive('table')">
-    <RmButton :active="editor.isActive('table')" :disabled="editor.isActive('table')" :name="name">
+    <RmButton :active="editor.isActive('table')" :disabled="editor.isActive('table')" :name="title">
       <i class="icon-table"></i>
     </RmButton>
     <template  #popper>
       <div class="title-text">
-        <span>插入表格</span>
-        <span v-if="activeRow>-1">{{ activeRow }}行 {{ activeColumn }}列</span>
+        <span>{{ t('table.insertTable') }}</span>
+        <span v-if="activeRow>-1">{{ activeRow }} x {{ activeColumn }} </span>
       </div>
       <ol class="install-table-options-list" @mouseleave="mouseoutBox">
         <li v-for="row of rows" :key="'table_column_key_'+row" >
@@ -25,14 +25,18 @@
   import RmButton from "./RmButton.vue";
   import {ref,defineProps} from "vue";
 
-  const {editor,name} = defineProps({
+  const {editor,title,t} = defineProps({
     editor: {
       type: Object,
       required: true
     },
-    name: {
+    title: {
       type: String,
       default: ''
+    },
+    t: {
+      type: Function,
+      required: true
     }
   })
   let rows = ref(10)

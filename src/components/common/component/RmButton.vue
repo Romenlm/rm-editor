@@ -24,7 +24,7 @@ const { name,disabled=false,active=false,placement='top' } = defineProps<{ name?
   height: 30px;
   outline: none;
   border-width: 0;
-  margin: 0 5px;
+  margin: 0 2px;
   padding: 0;
   display: flex;
   justify-content: center;

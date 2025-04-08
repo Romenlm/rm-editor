@@ -22,12 +22,12 @@ export const TextStyleExtended = TextStyle.extend({
   addCommands() {
     return {
       ...this.parent?.(),
-      setFontSize:(fontSize:string) =>({ commands }) => {
+      setFontSize:(fontSize:string) =>({ commands }:{commands:any}) => {
           return commands.setMark(this.name, { fontSize: fontSize });  //this.name 值为 'textStyle'
         },
       unsetFontSize:
         () =>
-        ({ chain }) => {
+        ({ chain }:{chain:any}) => {
           return chain().setMark(this.name, { fontSize: null }).removeEmptyTextStyle().run(); //this.name 值为 'textStyle'
         },
     };

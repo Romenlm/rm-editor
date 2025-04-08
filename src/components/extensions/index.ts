@@ -7,7 +7,6 @@ import Text from '@tiptap/extension-text'
 import Underline from '@tiptap/extension-underline'
 import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
-import TextStyle from '@tiptap/extension-text-style'
 import TextAlign from '@tiptap/extension-text-align'
 import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
@@ -18,12 +17,15 @@ import Table from '@tiptap/extension-table'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
-import Image from '@tiptap/extension-image'
 import Link from '@tiptap/extension-link'
+import Placeholder from '@tiptap/extension-placeholder'
 
 import { CustomHeading } from './customHeading'
 import {FormatPainter} from "./FormatPainter.ts";
-
+import {ImageExtended} from "./image.ts";
+import { TextStyleExtended } from './fontSize.ts'
+import Commands from "./commands.ts";
+import suggestion from "./suggestion.ts";
 
 // 代码块高亮
 import css from 'highlight.js/lib/languages/css'
@@ -60,13 +62,15 @@ const CustomTableCell = TableCell.extend({
   },
 })
 
-const extensions = [
+
+const extensions = (t:any,config:any)=>{
+  return [
   Document,
   Paragraph,
   Text,
   Underline,
   Highlight.configure({ multicolor: true }),
-  TextStyle,
+  TextStyleExtended,
   Color,
   TextAlign.configure({
     types: ['heading', 'paragraph'],
@@ -91,13 +95,13 @@ const extensions = [
   }),
   Table.configure({
     resizable: true,
-    handleDrop: true, // 启用表格专用拖拽处理
+    // handleDrop: true, // 启用表格专用拖拽处理
     allowTableNodeSelection: true
   }),
   TableRow,
   TableHeader,
   CustomTableCell,
-  Image.configure({
+  ImageExtended.configure({
     inline: true, // 图片作为内联元素
     allowBase64: true, // 允许 base64 图片
   }),
@@ -105,8 +109,16 @@ const extensions = [
     openOnClick: false,
     defaultProtocol: 'https',
   }),
+  Placeholder.configure({
+    placeholder: t('base.placeholder'),
+  }),
   CustomHeading,
-  FormatPainter
-]
+  FormatPainter,
+  Commands.configure({
+    suggestion,
+    t:t,
+    uploadImage: config?.uploadImage,
+  })
+]}
 
 export {extensions}

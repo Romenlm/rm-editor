@@ -11,7 +11,7 @@ function getPmView() {
       return null;
   }
 }
-function serializeForClipboard(view, slice) {
+function serializeForClipboard(view:any, slice:any) {
   // Newer Tiptap/ProseMirror
   // @ts-ignore
   if (view && typeof view.serializeForClipboard === 'function') {
@@ -117,7 +117,9 @@ export default Extension.create({
 
     function dragEnd(e:any, view:any) {
       extension.options.dragEnd({
-        dragEnd: true
+        dragEnd: true,
+        e: e,
+        view: view,
       })
       // reset the dragging, otherwise wrong content after dragging across multi editors repeatedly
       view.dragging = null
@@ -159,9 +161,9 @@ export default Extension.create({
           addEl.classList.add('global-drag-handle-add')
           addEl.addEventListener('click', e => addBtn(e, editorView))
           
-          const element = document.createElement('div')
+          const element:HTMLElement = document.createElement('div')
 
-          element.draggable = 'true'
+          element.draggable = true
           element.classList.add('global-drag-handle')
           element.addEventListener('dragstart', e => dragStart(e, editorView))
           element.addEventListener('dragend', e => dragEnd(e, editorView))
@@ -170,7 +172,7 @@ export default Extension.create({
           addElement = addEl
           dropElement = handleBox
           // append to editor's parentNode (not document.body), to match the logic of dragging across multi editors in pasteRule.ts
-          editorView.dom.parentNode.appendChild(dropElement)
+          editorView?.dom?.parentNode?.appendChild(dropElement)
           return {
             destroy() {
               removeNode(dropElement)
@@ -179,8 +181,8 @@ export default Extension.create({
           }
         },
         props: {
-          handleDrop(view, event, slice, moved) {
-            if (moved && view.dragging?.source) {
+          /*handleDrop(view, event, slice, moved) {
+            if (moved && view?.dragging?.source) {
               // const $pos = view.state.doc.resolve(view.dragging.source)
               // // 确保删除的是原始节点
               // if ($pos.parent.type.name === 'table') {
@@ -191,7 +193,7 @@ export default Extension.create({
               //   )
               // }
             }
-          },
+          },*/
           handleDOMEvents: {
             // drop(view, event) {
             //   setTimeout(() => {
@@ -229,8 +231,8 @@ export default Extension.create({
                     const rect = absoluteRect(node)
                     const win = node.ownerDocument.defaultView
                     // rect.top += win.pageYOffset + (lineHeight - 24) / 2 + top
-                    rect.left += win.pageXOffset
-                    rect.top = node.offsetTop
+                    rect.left += win?.pageXOffset
+                    rect.top = (node as HTMLElement)?.offsetTop;
                     rect.width = 0
                     let type = getType(node)
                     addElement.className = `global-drag-handle-add add-${type}`
@@ -245,7 +247,7 @@ export default Extension.create({
                   }
                 }
               }
-            },100),
+            },100,true),
           },
         },
       }),

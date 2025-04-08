@@ -177,7 +177,7 @@
     max-width: 100%;
 
     &.ProseMirror-selectednode {
-      outline: 2px solid #2f04ec;
+      outline: 0px solid #2f04ec;
     }
   }
   a {
@@ -191,4 +191,19 @@
   p{
     margin: 5px 0;
   }
+  p.is-editor-empty:first-child::before {
+    color: #999;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+  .tiptap p.is-empty::before {
+    color: #999;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
 }

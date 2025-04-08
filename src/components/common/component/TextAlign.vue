@@ -18,7 +18,7 @@
 import RmButton from "./RmButton.vue";
 import MenuButton from "./MenuButton.vue";
 import {reactive, ref,defineProps,onMounted} from "vue";
-let {editor,name} = defineProps({
+let {editor,name,t} = defineProps({
   editor: {
     type: Object,
     required: true
@@ -26,6 +26,10 @@ let {editor,name} = defineProps({
   name: {
     type: String,
     default: ''
+  },
+  t: {
+    type: Function,
+    required: true
   }
 })
 
@@ -34,25 +38,25 @@ let selectAlign = ref<string>('')
 let list:any = reactive({
   value: [
     {
-      name: '左对齐',
+      name: t('tools.leftAlign'),
       value: 'left',
       fun: 'setTextAlign',
       icon: 'icon-align-left',
     },
     {
-      name: '居中',
+      name: t('tools.centerAlign'),
       value: 'center',
       fun: 'setTextAlign',
       icon: 'icon-align-center'
     },
     {
-      name: '右对齐',
+      name: t('tools.rightAlign'),
       value: 'right',
       fun: 'setTextAlign',
       icon: 'icon-align-right'
     },
     {
-      name: '两端对齐',
+      name: t('tools.justifyAlign'),
       value: 'justify',
       fun: 'setTextAlign',
       icon: 'icon-align-justify'
