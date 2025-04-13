@@ -24,7 +24,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {defineProps,reactive,ref,onMounted,watch} from 'vue'
+import {reactive,ref,onMounted,watch} from 'vue'
 import {throttle} from "../../../assets/common/utils.ts";
 import RmButton from "./RmButton.vue";
 const {editor,isDrag,t} = defineProps({
@@ -148,7 +148,7 @@ const style = reactive<Style>({
   top:'',
   right:''
 })
-let toolsHeight = ref(330)
+let toolsHeight = ref(300)
 let placementValue = ref('top')
 let isMove = ref(false)
 watch(()=>isDrag,()=>{
@@ -198,7 +198,7 @@ const setPosition = throttle(()=>{
       let trTop = trElement.offsetTop
       style.height = ''
       style.width='40px'
-      flexDirection.value = 'column'
+      flexDirection.value = 'col'
       style.left = (tableElement.children[0].clientWidth)+58+'px'
       if(tableBottom-trTop<toolsHeight.value){
         style.top = (tableBottom-toolsHeight.value)+'px'
@@ -233,6 +233,7 @@ const setDisabled = (key:string)=> {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   position: absolute;
   box-shadow: 0 0 0 1px @border-color;
   background-color: #fff;
@@ -240,9 +241,11 @@ const setDisabled = (key:string)=> {
   z-index: 1;
   &.flex-col{
     flex-direction: column;
+    padding: 7px 0;
   }
   &.flex-row{
     flex-direction: row;
+
   }
 }
 </style>

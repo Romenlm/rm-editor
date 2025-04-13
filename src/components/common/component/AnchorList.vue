@@ -14,7 +14,7 @@
   </ol>
 </template>
 <script setup lang="ts">
-import {defineProps, onMounted, reactive,ref} from 'vue'
+import {onMounted, reactive,ref} from 'vue'
 import {throttle} from "../../../assets/common/utils.ts";
 
 const {editor} = defineProps({

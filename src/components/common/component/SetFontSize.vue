@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import RmButton from "./RmButton.vue";
 import MenuButton from "./MenuButton.vue";
-import {reactive, ref, defineProps, computed, watch} from "vue";
+import {reactive, ref, computed, watch} from "vue";
 let {editor,title} = defineProps({
   editor: {
     type: Object,

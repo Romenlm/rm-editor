@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 
-import {defineProps, ref,watch,defineExpose} from 'vue'
+import { ref,watch} from 'vue'
 
 const {items,command,editor,range} = defineProps<{items:any,command:any,editor:any,range:any}>()
 let selectedIndex = ref(0)

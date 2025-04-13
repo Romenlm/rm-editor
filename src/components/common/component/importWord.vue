@@ -13,7 +13,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {defineEmits, defineProps, ref} from 'vue'
+import {ref} from 'vue'
 import mammoth from "mammoth";
 import RmButton from "./RmButton.vue";
 import {setHeadingId} from "../../../assets/common/utils.ts";

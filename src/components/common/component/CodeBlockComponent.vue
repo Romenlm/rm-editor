@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import { ref, computed, defineProps } from 'vue'
+import { ref, computed } from 'vue'
 
 // 定义 props
 const props = defineProps(nodeViewProps)

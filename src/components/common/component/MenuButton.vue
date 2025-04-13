@@ -29,7 +29,7 @@
 </template>
 <script setup lang="ts">
 import { Dropdown,vClosePopper } from 'floating-vue'
-import {defineProps, defineEmits, ref,watch} from 'vue'
+import {ref,watch} from 'vue'
 const emit = defineEmits(['change'],)
 interface MenuOption {
   value: string;

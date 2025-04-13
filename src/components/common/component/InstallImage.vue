@@ -12,7 +12,7 @@
   />
 </template>
 <script setup lang="ts">
-import {defineProps, defineEmits, ref} from 'vue'
+import {ref} from 'vue'
 import RmButton from "./RmButton.vue";
 const emit = defineEmits(['setImage'])
 const {editor,name} = defineProps({

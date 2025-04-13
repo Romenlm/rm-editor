@@ -23,7 +23,7 @@
 <script setup lang="ts">
   import { Dropdown, vClosePopper } from 'floating-vue'
   import RmButton from "./RmButton.vue";
-  import {ref,defineProps} from "vue";
+  import {ref} from "vue";
 
   const {editor,title,t} = defineProps({
     editor: {

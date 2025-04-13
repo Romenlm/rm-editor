@@ -12,7 +12,6 @@
 </template>
 <script setup lang="ts">
 import { vTooltip } from 'floating-vue'
-import {defineProps} from 'vue'
 
 const { name,disabled=false,active=false,placement='top' } = defineProps<{ name?: string, disabled?: boolean, active?: boolean,placement?:string }>()
 </script>
@@ -20,8 +19,8 @@ const { name,disabled=false,active=false,placement='top' } = defineProps<{ name?
 <style scoped lang="less">
 @import "../../../assets/style/var.less";
 .rm-button{
-  min-width: 30px;
-  height: 30px;
+  min-width: 26px;
+  height: 26px;
   outline: none;
   border-width: 0;
   margin: 0 2px;

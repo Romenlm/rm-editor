@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {ref,defineEmits,defineProps} from 'vue'
+import {ref} from 'vue'
 const {icon,defaultColor} = defineProps({
   icon: {
     type: String,

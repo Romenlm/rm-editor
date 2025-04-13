@@ -34,7 +34,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {defineEmits, reactive, defineProps, ref} from "vue";
+import {reactive, ref} from "vue";
 import {getToolbar} from "../../assets/common/config.ts";
 import RmButton from "./component/RmButton.vue";
 import SetFontColor from "./component/SetFontColor.vue";

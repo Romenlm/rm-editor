@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { BubbleMenu, EditorContent, useEditor } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import { extensions } from './extensions'
@@ -77,7 +77,7 @@ import SetLinkFloatDialog from "./common/component/SetLinkFloatDialog.vue";
 import TableToolbar from "./common/component/TableToolbar.vue";
 import LeftMenu from "./common/component/LeftMenu.vue";
 import ImportWord from "./common/component/importWord.vue";
-import ImageEdit from "./common/component/ImageEdit.vue";
+// import ImageEdit from "./common/component/ImageEdit.vue";
 import AnchorList from "./common/component/AnchorList.vue";
 import { setHeadingId } from "../assets/common/utils.ts";
 

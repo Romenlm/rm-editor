@@ -48,7 +48,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {defineEmits, reactive, defineProps, computed, onMounted} from "vue";
+import {reactive, computed, onMounted} from "vue";
 import {getBubbleList} from "../../assets/common/config.ts";
 import RmButton from "./component/RmButton.vue";
 import SetFontColor from "./component/SetFontColor.vue";

@@ -12,7 +12,6 @@
   </RmButton>
 </template>
 <script setup lang="ts">
-import {defineProps} from 'vue'
 import RmButton from "./RmButton.vue";
 import SelectColor from "./SelectColor.vue";
 const {editor,title} = defineProps({

@@ -23,7 +23,7 @@
 </template>
 <script setup lang="ts">
 import RmButton from "./RmButton.vue";
-import {defineProps, reactive, ref} from 'vue'
+import {reactive, ref} from 'vue'
 
 const {editor,targetEndPos,t} = defineProps({
   editor: {
