@@ -153,6 +153,22 @@ export const getToolbar = (t:any) => {
       type: 'line',
     },
     {
+      name: t('tools.subscript'),
+      key: 'subscript',
+      fun: 'toggleSubscript',
+      icon: 'icon-subscript',
+      type: 'button',
+      showActive: true
+    },
+    {
+      name: t('tools.superscript'),
+      key: 'superscript',
+      fun: 'toggleSuperscript',
+      icon: 'icon-superscript',
+      type: 'button',
+      showActive: true
+    },
+    {
       name: t('tools.importWord'),
       key: 'importWord',
       fun: '',
@@ -318,6 +334,24 @@ export const getBubbleList = (t:any) => {
       icon: '',
       type: 'line',
       showActive: false,
+      noShowNode: ['image']
+    },
+    {
+      name: t('tools.subscript'),
+      key: 'subscript',
+      fun: 'toggleSubscript',
+      icon: 'icon-subscript',
+      type: 'button',
+      showActive: true,
+      noShowNode: ['image']
+    },
+    {
+      name: t('tools.superscript'),
+      key: 'superscript',
+      fun: 'toggleSuperscript',
+      icon: 'icon-superscript',
+      type: 'button',
+      showActive: true,
       noShowNode: ['image']
     },
     {

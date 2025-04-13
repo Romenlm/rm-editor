@@ -47,6 +47,8 @@ export const zh_CN =  {
     "heading5":"标题5",
     "heading6":"标题6",
     "list":"列表",
+    "subscript":"下标",
+    "superscript":"上标",
   },
   "table":{
     "insertTable":'插入表格',

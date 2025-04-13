@@ -7,6 +7,7 @@
           @setLink="setLinkDialog"
           @showAnchor="showAnchor"
           @word="importWord"
+          @setImage="uploadImage"
         @fullscreen="setFullscreen" />
       <div class="rm-editor-content">
         <div class="rm-editor-wrapper">
@@ -20,7 +21,7 @@
             <LeftMenu :editor="rmEditor" :target-end-pos="targetEndPos" :t="t" />
           </div>
           <table-toolbar :editor="rmEditor" :is-drag="isDragStatus" :t="t" />
-          <ImageEdit :editor="rmEditor" />
+<!--          <ImageEdit :editor="rmEditor" />-->
           <editor-content class="rm-editor-content-box" :editor="rmEditor" />
         </div>
         <div>
@@ -289,12 +290,12 @@ const setupPasteHandler = () => {
       }
     }
     if (fileList && fileList.length > 0) {
-      const file = files[0]
       e.preventDefault()
       const pos = rmEditor.value.state.selection.$from.pos
       if(config?.uploadImage){
         uploadImage(fileList,pos)
       }else{
+        const file = files[0]
         handleImageUpload(file,pos)
       }
     }

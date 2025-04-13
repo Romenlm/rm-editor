@@ -15,6 +15,7 @@
           ref="uploadImage"
           type="file"
           accept=".svg,.jpg,.jpeg,.png"
+          :multiple="true"
           @change="selectFile"
       />
     </template>
@@ -83,9 +84,14 @@ const selectItem = (index:any)=> {
   }
 }
 const selectFile = (event:any)=> {
-  const file = event.target.files[0];
-  if (!file) return;
-  itemObj?.command(editor,range, file)
+  const files = event.target.files;
+  let list:any[] = []
+  let val:any
+  for(val of files){
+    list.push(val)
+  }
+  if (!list) return;
+  itemObj?.command(editor,range, list)
 }
 
 /**

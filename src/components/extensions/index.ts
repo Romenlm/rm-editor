@@ -19,6 +19,8 @@ import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
+import Superscript from '@tiptap/extension-superscript'
+import Subscript from '@tiptap/extension-subscript'
 
 import { CustomHeading } from './customHeading'
 import {FormatPainter} from "./FormatPainter.ts";
@@ -112,6 +114,8 @@ const extensions = (t:any,config:any)=>{
   Placeholder.configure({
     placeholder: t('base.placeholder'),
   }),
+  Superscript,
+  Subscript,
   CustomHeading,
   FormatPainter,
   Commands.configure({

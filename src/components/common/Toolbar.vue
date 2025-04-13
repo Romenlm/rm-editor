@@ -16,8 +16,8 @@
         <SetFontColor v-if="item.type==='fontColor'" :editor="editor" :title="item.name"/>
         <SetHighlight v-if="item.type==='highlight'" :editor="editor" :title="item.name"/>
         <TextAlign v-if="item.type==='align'" :editor="editor" :name="item.name" :t="t"/>
-        <InstallTable v-if="item.type==='table'" :editor="editor" :title="item.name" :t="t"/>
-        <InstallImage v-if="item.type==='image'" :editor="editor" :name="item.name"/>
+        <InstallTable v-if="item.type==='table'" :editor="editor" :title="item.name" :t="t" />
+        <InstallImage v-if="item.type==='image'" :editor="editor" :name="item.name" @setImage="setImage"/>
 <!--        <InstallLink v-if="item.type==='link'" :editor="editor" :name="item.name" :t="t"/>-->
         <span v-if="item.type==='line'" class="rm-liner"/>
       </template>
@@ -45,6 +45,7 @@ import InstallImage from "./component/InstallImage.vue";
 let emit = defineEmits<{
   (e: 'showAnchor'): void,
   (e: 'setLink',key:string): void,
+  (e: 'setImage',list:any[],pos:number): void,
   (e: 'word'): void,
   (e: 'fullscreen', value: boolean): void
 }>()
@@ -82,6 +83,10 @@ const setSelect = (item:any) => {
     let params = item.fun === 'setTextAlign' ? item.key : ''
     editor.chain().focus()[item.fun](params).run()
   }
+}
+const setImage = (list:any[])=>{
+  let pos = editor.state.selection.$from.pos
+  emit('setImage',list,pos)
 }
 const showAnchor = () => {
   emit('showAnchor')

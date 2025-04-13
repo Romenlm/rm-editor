@@ -47,6 +47,8 @@ export const en_US = {
     "heading5":"heading5",
     "heading6":"heading6",
     "list":"list",
+    "subscript":"subscript",
+    "superscript":"superscript",
   },
   "table":{
     "insertTable":'insert table',

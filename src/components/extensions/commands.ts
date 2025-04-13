@@ -112,19 +112,15 @@ export default Extension.create({
             title: this.options.t('tools.image'),
             icon:'icon-image',
             type:'image',
-            command: (editor:any,range:any,file:any) => {
+            command: (editor:any,range:any,files:any[]) => {
               if(this.options.uploadImage){
-                this.options.uploadImage(file,(url:any)=>{
-                  editor.chain().focus().deleteRange(range).setImage({ src: url, alt: file.name }).run()
+                this.options.uploadImage(files,(urls:string[])=>{
+                  let str:string = ''
+                  urls.forEach((url:string)=>{
+                    str += `<p><img src="${url}"></p>`
+                  })
+                  editor.chain().focus().deleteRange(range).insertContent(str).run()
                 })
-              }else {
-                const reader = new FileReader();
-                reader.onload = (e: any) => {
-                  const base64 = e.target.result;
-                  // 在指定位置插入图片base64
-                  editor.chain().focus().deleteRange(range).setImage({ src: base64, alt: file.name }).run()
-                };
-                reader.readAsDataURL(file);
               }
             },
           }
